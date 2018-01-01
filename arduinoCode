@@ -1,0 +1,40 @@
+/*
+  AnalogReadSerial
+  Reads an analog input on pin 0, prints the result to the serial monitor.
+  Graphical representation is available using serial plotter (Tools > Serial Plotter menu)
+  Attach the center pin of a potentiometer to pin A0, and the outside pins to +5V and ground.
+
+  This example code is in the public domain.
+*/
+
+// the setup routine runs once when you press reset:
+int relayPin = 13;
+int sensorValue = analogRead(A0);// read the input on analog pin 0:
+void setup() {
+  // initialize serial communication at 9600 bits per second:
+  Serial.begin(9600);
+  pinMode(relayPin, OUTPUT);  
+}
+// the loop routine runs over and over again forever:
+void loop() {
+  // print out the value you read:
+  int sensorValue = analogRead(A0);
+  sensorValue=round(sensorValue)/100.0; //rounds the number to nearest 100
+  //Serial.println(sensorValue);
+  if (sensorValue>=6.0){
+  // "start waterpump");
+  delay(3600000);
+  digitalWrite(relayPin,HIGH); 
+  }
+  if(sensorValue<=4.0){
+  //"stop waterpump");
+  delay(360000);
+  digitalWrite(relayPin,LOW);
+  }
+  if(sensorValue<=2){
+    digitalWrite(relayPin,LOW);
+    }
+ delay(5);        // delay in between reads for stability
+}
+    
+  
